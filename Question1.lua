@@ -10,9 +10,10 @@ end
 
 function onLogout(player)
     if player:getStorageValue(login_key) == 1 then
-        addEvent(releaseStorage, 1000, player, login_key) --after one second, 
+        addEvent(releaseStorage, 1000, player, login_key) -- after one second, logout player using key
         return true --logout successful
+    else
+        return false --Player could not be found
     end
-    return false --Player could not be found
 end
 
