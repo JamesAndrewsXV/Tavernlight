@@ -2,6 +2,7 @@
 
 ## Question 1
 [Question 1 Answer](Question1.lua)
+
 ### Problem
 - There seems to be an arbitrary value of 1000, which seems to indicate a key in the player object that has a specific function. This is not clear. I have assumed that the key 1000 holds the value that pertains to the player's login state.
 - The `onLogout` function unconditionally returns true. The caller will not be able to interpret if the logout of a player was successful or not based off of its return value.
@@ -9,18 +10,37 @@
 
 ### Solution
 - Added a local variable [`login_key`](Question1.lua?plain=1#L4), which specifies that the key being manipulated for the `onLogout` function is manipulating the login state of a player.
-- Changed arguments for [`releaseStorage`](Question1.lua?plain=1#L7) to change a player's value at the given key to -1, which makes it polymorphic for other functions on a player that may require release
+- Changed arguments for [`releaseStorage`](Question1.lua?plain=1#L7) to change a player's value at the given key to -1, which makes it polymorphic for other functions on a player that may require release.
 - Changed `onLogout` to return [true when it has successfully found a player who is logged in and executes `releaseStorage`](Question1.lua?plain=1#L14), and returns [false when the condition has not been met](Question1.lua?plain=1#L16).
 
 ## Question 2
+[Question 2 Answer](Question2.lua)
 
 ### Problem
-- This function will only print one guild name despite asking for a list
-- `result` is an undefined variable
-- `db` may assumedly be a globally accessible variable, but it is not explicitly outlined
+- This function will only print one guild name despite asking for a list.
+- `result` is an undefined variable.
+- `db` may assumedly be a globally accessible variable, but it is not explicitly outlined.
 
 ### Solution
 - Added `db` as an argument to the [function signature](Question2.lua?plain=1#L3) to ensure compatibility. This step is not necessary if `db` is a global variable.
 - Added a [table](Question2.lua?plain=1#L7) to represent the list of found guild names
 - [`while` loop](Question2.lua?plain=1#L9) inserts new names into the `guildNames` table as long as a result is found in the database `db`.
-- If we have [found guilds that meet our member criteria](Question2.lua?plain=1#L16), we will print them line by line, otherwise  we will [print a message that states none have been found](Question2.lua?plain=1#L20)
+- If we have [found guilds that meet our member criteria](Question2.lua?plain=1#L16), we will print them line by line, otherwise  we will [print a message that states none have been found](Question2.lua?plain=1#L20).
+
+## Question 3
+[Question 3 Answer](Question3.lua)
+
+### Problem
+- This function is inadequately named. Its function is to kick members from the player's party.
+- There are no failsafes to handle players who do not exist or players who are not in a party.
+- Players are being removed by name. Assuming names are unique identifiers, we should be comparing the party member's name to the names found in matching players.
+- There is a mismatch on the construction of a player character. The beginning of a function utilizes `playerId` to retrieve a player character, while the for loop utilizes `membername` to retrieve a player. I will assume that players cannot be properly retrieved by their name.
+
+### Solution
+
+- Changed the function name to [`kickPartyMember`](Question3.lua?plain=1#L3)
+- Added error messages to the retrieval of a [Player](Question3.lua?plain=1#L4) and a [Party](Question3.lua?plain=1#L11)
+- Renamed the variables in the [for loop](Question3.lua?plain=1#L18)
+- Changed comparison of the [if statement](Question3.lua?plain=1#L19) from player objects to strings
+- Added [error](Question3.lua?plain=1#L24) for when a party member could not be found in the player's party.
+
