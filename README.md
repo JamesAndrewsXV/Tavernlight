@@ -44,3 +44,23 @@
 - Changed comparison of the [if statement](Question3.lua?plain=1#L19) from player objects to strings
 - Added [error](Question3.lua?plain=1#L24) for when a party member could not be found in the player's party.
 
+## Question 4
+[Question 4 Answer](Question4.cpp)
+
+### Problem
+- The core feature causing the issue is that we may obtain a player by two different methods
+    -  The first method is through the active game. These players seem to be logged in.
+    - The second method is through `IOLoginData::loadPlayerByName`. These players are offline.
+- While online, all the `player` pointer needs to do is point to a currently active player in the `g_game`. This _should NOT be deleted, as it will erase the player from the game_. Instead, we should let this pointer go out of scope.
+- While offline, the `player` needs to create a new player object, and load its data through `IOLoginData::loadPlayerByName`. Before the function is finished, it needs to _delete the player object_ to prevent the memory leak.
+- The `item` object must also be deleted after an item is successfully created and used.
+
+### Solution
+
+- If `player` failed to be instantiated by `IOLoginData::loadPlayerByName`, it will now be [deleted](Question4.cpp?plain=1#L10).
+- If an `item` could not be created and a `player` is offline, it will be [deleted](Question4.cpp?plain=1#L18).
+    - Because no changes have been made to the player, it will not be saved
+- When the `item` has been successfully added to the `player` and the `player` is offline, it will be [deleted](Question4.cpp?plain=1#L28).
+- At the end of the function, the `item` will be [deleted](Question4.cpp?plain=1#L30).
+
+

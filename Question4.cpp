@@ -2,16 +2,22 @@
 
 void Game::addItemToPlayer(const std::string& recipient, uint16_t itemId)
 {
-    Player* player = g_game.getPlayerByName(recipient);
+    Player* player = g_game.getPlayerByName(recipient); //Players of an active game
     if (!player) {
+        //attempting to load inactive players
         player = new Player(nullptr);
         if (!IOLoginData::loadPlayerByName(player, recipient)) {
+            delete player;
             return;
         }
     }
 
     Item* item = Item::CreateItem(itemId);
     if (!item) {
+        delete item;
+        if(player->isOffline()) {
+            delete player;
+        }
         return;
     }
 
@@ -19,5 +25,7 @@ void Game::addItemToPlayer(const std::string& recipient, uint16_t itemId)
 
     if (player->isOffline()) {
         IOLoginData::savePlayer(player);
+        delete player;
     }
+    delete item;
 }
