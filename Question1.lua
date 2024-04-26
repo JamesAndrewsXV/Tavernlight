@@ -1,6 +1,6 @@
 --Q1 - Fix or improve the implementation of the below methods
 
--- Use constant variable to specify key's purpose
+-- Use variable to specify key's purpose
 local login_key = 1000
 
 -- Changed arguments to release storage of specified key.
