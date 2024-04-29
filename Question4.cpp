@@ -21,11 +21,12 @@ void Game::addItemToPlayer(const std::string& recipient, uint16_t itemId)
         return;
     }
 
+    // Refer to the README for notes
+    // This implementation assumes `internalAddItem` handles the item's lifetime
     g_game.internalAddItem(player->getInbox(), item, INDEX_WHEREEVER, FLAG_NOLIMIT);
 
     if (player->isOffline()) {
         IOLoginData::savePlayer(player);
         delete player;
     }
-    delete item;
 }
