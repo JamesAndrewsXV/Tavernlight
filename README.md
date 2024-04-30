@@ -67,7 +67,13 @@
 ## Question 5
 
 [Question 5 Video](Q5/Question5.mp4)
+[Tornado attack script](Environment\TFS\data\spells\scripts\attack\tornado_attack.lua)
+[spells.xml](Environment\TFS\data\spells\spells.xml?plain=1#L185)
+[Addition of spell effect matricies](Environment\TFS\data\spells\lib\spells.lua?plain=1#L200)
+[Spell database update](Environment\OTC\modules\gamelib\spells.lua?plain=1#L158)
 
+My basic goal with these changes was to develop a system where the spells could play multiple times via one call. The small tornado effect and large tornado effect would have to be run on different timers from one another. However, there is an element of randomness to the appearance of the small tornado effects, which, given more time, I am confident I would be able to implement.
 
+## Question 7
 
 
