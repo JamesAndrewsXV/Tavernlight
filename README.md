@@ -64,3 +64,10 @@
 - The `item`'s lifetime is not handled in this function. If the `item` has to be freed, however, a [delete call belongs after the function call to `internalAddItem`](Question4.cpp?plain=1#L26).
 
 
+## Question 5
+
+[Question 5 Video](Q5/Question5.mp4)
+
+
+
+

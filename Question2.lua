@@ -6,7 +6,7 @@ function printSmallGuildNames(memberCount, db)
     local resultId = db.storeQuery(string.format(selectGuildQuery, memberCount))
     local guildNames = {}
 
-    while resultId ~= nil
+    while resultId
     do
         local name = resultId.getString("name")
         table.insert(guildNames, name) -- add guild names one by one to table
